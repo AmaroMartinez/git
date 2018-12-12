@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
 
-public class ArrayListDiccionario {
+public class ArrayListDiccionarioDescendente {
 
 	public static void main(String[] args) {
 		// Recibe palabras por teclado y las almacena en un array de Strings en orden
@@ -114,7 +114,8 @@ public class ArrayListDiccionario {
 			case 4:
 
 				// Listar Diccionario
-				Collections.sort(diccionario);
+				Comparator<String> comparador = Collections.reverseOrder(); 
+				Collections.sort(diccionario, comparador);
 				
 				System.out.printf("Listado del diccionario \n");
 				for (int posicion = 0; posicion < diccionario.size(); posicion++) {

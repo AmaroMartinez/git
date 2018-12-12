@@ -2,10 +2,9 @@ package evaluacion2;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Scanner;
 
-public class ArrayListEnterosMenuOrdenado {
+public class ArrayListEnterosMenuOrdenadoDescendente {
 
 	public static void main(String[] args) {
 		// Crea la clase ArrayListEnterosMenuOrdenado que muestra un menú por pantalla
@@ -112,8 +111,8 @@ public class ArrayListEnterosMenuOrdenado {
 			case 4:
 
 				// Listar Enteros
-				Comparator<Integer> comparador = Collections.reverseOrder(); 
-				Collections.sort(Enteros, comparador);
+
+				Collections.sort(Enteros);
 
 				System.out.printf("Listado de Enteros \n");
 				for (int posicion = 0; posicion < Enteros.size(); posicion++) {
