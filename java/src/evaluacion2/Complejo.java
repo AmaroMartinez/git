@@ -9,8 +9,7 @@ public class Complejo {
 	// Metodos
 	// Constructor por defecto
 	public Complejo() {
-		this.real = 0;
-		this.imaginaria = 0;
+		
 	}
 
 	// Constructor Personalizado
@@ -22,7 +21,6 @@ public class Complejo {
 	// Constructor Personalizado
 	public Complejo(double n) {
 		this.real = n;
-		this.imaginaria = 1;
 	}
 
 	// Constructor Copia
