@@ -16,6 +16,23 @@ public class ComplejoMain {
 			Complejo c4 = new Complejo(c2);
 			//System.out.println(c4); // 5.0 + 7.0i
 			c4.escribir();
+			
+			// Probar el Getter and Setters
+			double r;
+			r = c2.getReal(); // r = 2.0
+			c4.setReal(4.0); // 4.0 + 3.0i
+			double i;
+			i = c2.getImaginaria(); // i = 3.0
+			c4.setImaginaria(44.0); // 4.0 + 44.0i
+			c4.escribir();
+			
+			//Probar Hash and equals
+			if (c4.equals(c2)) {
+				System.out.println("Son iguales");
+			}
+			else {
+				System.out.println("No son iguales");
+			}
 	}
 
 }

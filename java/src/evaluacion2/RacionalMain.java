@@ -13,6 +13,23 @@ public class RacionalMain {
 		Racional r4 = new Racional(r2);
 		System.out.println(r4); // 5/7
 		
+	// Probar el Getter and Setters
+				double n;
+				n = r2.getnumerador(); // 
+				r4.setnumerador(4); // 
+				double d;
+				d = r2.getdenominador(); // 
+				r4.setdenominador(44); // 
+				System.out.println(r4);
+		
+	//Probar Hash and equals
+		if (r4.equals(r2)) {
+			System.out.println("Son iguales");
+		}
+		else {
+			System.out.println("No son iguales");
+		}
+		
 	}
 
 }
