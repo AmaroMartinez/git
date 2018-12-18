@@ -1,43 +1,45 @@
 package evaluacion2;
 
-public class Racional {
+import java.util.Scanner;
+
+public class Racional implements Comparable<Racional> {
 	// Defino la clase Racional
 	// Propiedades
 	private int numerador;
 	private int denominador;
-	
+
 	// Metodos
-	
-	//Constructor por defecto
-	public Racional(){
+
+	// Constructor por defecto
+	public Racional() {
 		this.numerador = 0;
 		this.denominador = 1;
 	}
 
-	//Constructor Personalizado
+	// Constructor Personalizado
 	public Racional(int n, int d) {
 		this.numerador = n;
 		this.denominador = d;
 	}
 
-	//Constructor Personalizado
+	// Constructor Personalizado
 	public Racional(int n) {
 		this.numerador = n;
 		this.denominador = 1;
 	}
-	
-	//Constructor Copia
+
+	// Constructor Copia
 	public Racional(Racional r) {
 		this.numerador = r.numerador;
 		this.denominador = r.denominador;
 	}
-	
+
 	// toString
 	@Override
 	public String toString() {
 		return (this.numerador + "/" + this.denominador);
 	}
-	
+
 //Getters and Setters
 	public int getnumerador() {
 		return numerador;
@@ -54,20 +56,17 @@ public class Racional {
 	public void setdenominador(int denominador) {
 		this.denominador = denominador;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		long temp;
-		temp = Double.doubleToLongBits(denominador);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(numerador);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + numerador;
+		result = prime * result + denominador;
 		return result;
 	}
 
-	//HashCode and equals
+	// HashCode and equals
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -82,10 +81,30 @@ public class Racional {
 		// Comparo las propiedades de los objetos
 		// Convierte el objeto a la clase a comparar
 		Racional other = (Racional) obj;
-		if (this.numerador == other.numerador && this.denominador == other.denominador) {
-			// Si los valores de las propiedades son iguales
+		if ((this.numerador * other.denominador) == (other.numerador * this.denominador)) {
 			return true;
 		}
-		return false;		
+		return false;
+	}
+
+	@Override
+	public int compareTo(Racional other) {
+		if ((this.numerador * other.denominador) > (other.numerador * this.denominador)) {
+			return 1;
+		} else if ((this.numerador * other.denominador) < (other.numerador * this.denominador)) {
+			return -1;
+		}
+		return 0;
+	}
+
+//Leer
+	public void leer(Scanner teclado) {
+		// Lee por teclado las propiedades
+		// Leo numerador
+		System.out.println("Numerador: ");
+		this.numerador = teclado.nextInt();
+		// Leo denominador
+		System.out.println("Denominador: ");
+		this.denominador = teclado.nextInt();
 	}
 }

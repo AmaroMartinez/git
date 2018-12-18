@@ -1,6 +1,8 @@
 package evaluacion2;
 
-public class Complejo {
+import java.util.Scanner;
+
+public class Complejo implements Comparable<Complejo> {
 	// Defino la clase Complejo
 	// Propiedades
 	private double real;
@@ -9,7 +11,7 @@ public class Complejo {
 	// Metodos
 	// Constructor por defecto
 	public Complejo() {
-		
+
 	}
 
 	// Constructor Personalizado
@@ -29,18 +31,18 @@ public class Complejo {
 		this.imaginaria = c.imaginaria;
 	}
 
-	/*
-	 * toString
-	 * 
-	 * @Override public String toString() { return (this.real + " + " +
-	 * this.imaginaria + "i"); }
-	 */
-	
+	// toString
+
+	@Override
+	public String toString() {
+		return (this.real + " + " + this.imaginaria + "i");
+	}
+
 	void escribir() {
 		System.out.println(this.real + " + " + this.imaginaria + "i");
 	}
 
-	//Getters and Setters
+	// Getters and Setters
 	public double getReal() {
 		return real;
 	}
@@ -69,7 +71,7 @@ public class Complejo {
 		return result;
 	}
 
-	//HashCode and equals
+	// HashCode and equals
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -88,7 +90,38 @@ public class Complejo {
 			// Si los valores de las propiedades son iguales
 			return true;
 		}
-		return false;		
+		return false;
 	}
-	
+
+	@Override
+	public int compareTo(Complejo other) {
+		if (this.real > other.real) {
+			return 1;
+
+		} else if (this.real < other.real) {
+			return -1;
+
+		} else {
+			if (this.imaginaria > other.imaginaria) {
+				return 1;
+
+			} else if (this.imaginaria < other.imaginaria) {
+				return -1;
+			}
+		}
+		return 0;
+
+	}
+
+	//Leer
+	public void leer(Scanner teclado) {
+		// Lee por teclado las propiedades
+		// Leo real
+		System.out.println("Real: ");
+		this.real = teclado.nextDouble();
+		// Leo imaginaria
+		System.out.println("Imaginaria: ");
+		this.imaginaria = teclado.nextDouble();
+	}
+
 }
