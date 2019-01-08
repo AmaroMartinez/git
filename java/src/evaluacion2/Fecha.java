@@ -93,21 +93,21 @@ public class Fecha implements Comparable<Fecha> {
 
 	@Override
 	public int compareTo(Fecha other) {
+		int comparacion = 0;
 		if (this.año > other.año) {
-			return 1;
+			comparacion = 1;
 		} else if (this.año < other.año) {
-			return -1;
+			comparacion = -1;
 		} else if (this.mes > other.mes) {
-			return 1;
+			comparacion = 1;
 		} else if (this.mes < other.mes) {
-			return -1;
+			comparacion = -1;
 		} else if (this.dia > other.dia) {
-			return 1;
+			comparacion = 1;
 		} else if (this.dia < other.dia) {
-			return -1;
-		} else {
-			return 0;
-		}
+			comparacion = -1;
+		} 
+		return (comparacion);
 	}
 
 	// Leer
