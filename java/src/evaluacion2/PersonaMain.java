@@ -29,24 +29,24 @@ public class PersonaMain {
 		else {
 			System.out.println(P3 + " y " + P2 + " No son iguales");
 		}
-		/*
+		
 	// CompareTo
-				if (r4.compareTo(r2)>0) {
-					System.out.println(r4 + " es mayor que " + r2);
+				if (P3.compareTo(P2)>0) {
+					System.out.println(P3 + " es mayor que " + P2);
 				}
-				else if (r4.compareTo(r2)<0) {
-					System.out.println(r4 + " es menor que " + r2);
+				else if (P3.compareTo(P2)<0) {
+					System.out.println(P3 + " es menor que " + P2);
 				}
 				else {
-					System.out.println(r4 + " es igual que " + r2);
+					System.out.println(P3 + " es igual que " + P2);
 				}
 		
 			// Leer
 				Scanner teclado = new Scanner(System.in);
-				r1.leer(teclado);
+				P1.leer(teclado);
 				teclado.close();
-				System.out.println(r1);
-				*/
+				System.out.println(P1);
+				
 	}
 
 }

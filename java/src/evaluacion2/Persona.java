@@ -103,16 +103,20 @@ public class Persona implements Comparable<Persona> {
 
 	@Override
 	public int compareTo(Persona other) {
-		if ((this.dni) > (other.dni)) {
-			return 1;
-		} else if (this.dni < other.dni) {
+		int resultado = (this.dni.compareTo(other.dni));
+		if (resultado>0) {
+		return 1;
+		} else if (resultado<0) {
 			return -1;
+		} else {
+			return 0;
 		}
-		return 0;
+		
 	}
 
 //Leer
-	public void leer(Scanner teclado, Fecha F) {
+	public void leer(Scanner teclado) {
+		int dia, mes, año;
 		// Lee por teclado las propiedades
 		// Leo nombre
 		System.out.println("Nombre: ");
@@ -124,8 +128,14 @@ public class Persona implements Comparable<Persona> {
 		System.out.println("DNI: ");
 		this.dni = teclado.nextLine();
 		// Leo fecha
-		System.out.println("Fecha de nacimiento: ");
-		this.fechanacimiento = F.leer(teclado);
+		System.out.println("Fecha de nacimiento");
+		System.out.println("Dia: ");
+		dia = teclado.nextInt();
+		System.out.println("Mes: ");
+		mes = teclado.nextInt();
+		System.out.println("Año: ");
+		año = teclado.nextInt();
+		this.fechanacimiento = new Fecha(dia,mes,año);
 		
 	}
 }
