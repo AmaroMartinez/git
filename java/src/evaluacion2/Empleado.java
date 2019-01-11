@@ -35,6 +35,7 @@ public class Empleado extends Persona {
 
 	// Constructor Copia
 	public Empleado(Empleado E) {
+		//con set y get coger los datos del otro constructor
 		this.departamento = E.departamento;
 		this.puesto = E.puesto;
 		this.salario = E.salario;

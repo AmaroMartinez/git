@@ -12,7 +12,7 @@ public class EmpleadoMain {
 		System.out.println(E2);
 		Empleado E3 = new Empleado("11111111A","Amaro","Martinez Angulo",new Fecha(),"Ventas","Subnormal",1.5);
 		System.out.println(E3);
-		Empleado E4 = new Empleado(E2);
+		Empleado E4 = new Empleado(E3);
 		System.out.println(E4);
 		/*
 	// Probar el Getter and Setters
