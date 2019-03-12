@@ -1,5 +1,6 @@
 package evaluacion3;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -8,45 +9,57 @@ import java.util.Scanner;
 public class RandomMasterMind {
 
 	public static void main(String[] args) {
-		
+
 		// Necesidades previas
-		int numero1, numero2, numero3, numero4;
-		String numerousuariostring;
-		int numerousuario;
+		ArrayList<Integer> numerocorrecto = new ArrayList<Integer>();
+		int cifra;
 		Random rnd = new Random();
+
 		Scanner teclado = new Scanner(System.in);
-		
+		String numerostring;
+		int nusuario;
+		char[] cadena = new char[4];
+
 		// Generar 4 numeros aleatorios diferentes
-		numero1 = ((int) (rnd.nextDouble() * 100000.0)) % 10;
-		do {
-		numero2 = ((int) (rnd.nextDouble() * 100000.0)) % 10;
-		} while (numero2 == numero1);
-		do {
-		numero3 = ((int) (rnd.nextDouble() * 100000.0)) % 10;
-		} while (numero3 == numero2 || numero3 == numero1);
-		do {
-		numero4 = ((int) (rnd.nextDouble() * 100000.0)) % 10;
-		} while (numero4 == numero3 || numero4 == numero2 || numero4 == numero1);
-		
-		System.out.println(numero1+""+numero2+""+numero3+""+numero4);
-
-		do {
-			System.out.println("Numero: ");
-			numerousuariostring = teclado.nextLine();
-			numerousuario = Integer.parseInt(numerousuariostring);
-			char array [];
-			array = numerousuariostring.toCharArray();
-			
-			if (numerousuario > numero) {
-				System.out.println("El numero secreto es menor");
-			} else if (numerousuario < numero) {
-				System.out.println("El numero secreto es mayor");
+		while (numerocorrecto.size() < 4) {
+			cifra = ((int) (rnd.nextDouble() * 100000.0)) % 10;
+			if (!(numerocorrecto.contains(cifra))) {
+				numerocorrecto.add(cifra);
 			}
+		}
 
-		} while (numerousuario != numero);
+		// Mostrar el arraylist
+		System.out.println("Numero Generado " + numerocorrecto);
+		/*
+		 * for (int i = 0; i < numerocorrecto.size(); i++) {
+		 * System.out.println(numerocorrecto.get(i)); }
+		 */
+
+		// Pedir un numero de 4 cifras al usuario
+		do {
+			System.out.println("Adivina el numero");
+			System.out.println("-----------------");
+			System.out.println("Introduce un numero de 4 cifras");
+			numerostring = teclado.nextLine();
+			try {
+				nusuario = Integer.parseInt(numerostring);
+			} catch (NumberFormatException e) {
+				numerostring = numerostring.replaceAll("[^0-9]", "");
+				nusuario = Integer.parseInt(numerostring);
+			}
+		} while (numerostring.length() > 4 || numerostring.length() < 4);
+
 		
+		cadena = numerostring.toCharArray();
+		
+		//Mostrar numero introducido por el usuario
+		System.out.println("Numero Introducido: " + nusuario);
+		
+		//Comparar el numero generado con el numero del usuario
+		
+		
+		// Cerrar teclado
 		teclado.close();
-		
 	}
 
 }
