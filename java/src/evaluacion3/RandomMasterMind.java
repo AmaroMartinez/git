@@ -1,6 +1,8 @@
 package evaluacion3;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -18,7 +20,7 @@ public class RandomMasterMind {
 		Scanner teclado = new Scanner(System.in);
 		String numerostring;
 		int nusuario;
-		char[] cadena = new char[4];
+		char[] cadena = new char[4];		
 
 		// Generar 4 numeros aleatorios diferentes
 		while (numerocorrecto.size() < 4) {
@@ -44,11 +46,15 @@ public class RandomMasterMind {
 			try {
 				nusuario = Integer.parseInt(numerostring);
 			} catch (NumberFormatException e) {
+				try {
 				numerostring = numerostring.replaceAll("[^0-9]", "");
 				nusuario = Integer.parseInt(numerostring);
+				} catch (NumberFormatException e2) {
+					numerostring = "";
+					nusuario = 0;
+				}
 			}
 		} while (numerostring.length() > 4 || numerostring.length() < 4);
-
 		
 		cadena = numerostring.toCharArray();
 		
@@ -57,7 +63,7 @@ public class RandomMasterMind {
 		
 		//Comparar el numero generado con el numero del usuario
 		
-		
+
 		// Cerrar teclado
 		teclado.close();
 	}

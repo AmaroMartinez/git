@@ -53,10 +53,11 @@ public class FicheroNombres {
 		FileReader fr = null;
 		BufferedReader br = null;
 		try {
-			archivo = new File("nombre.txt");
+			archivo = new File("nombres.txt");
 			fr = new FileReader(archivo);
 			br = new BufferedReader(fr);
 			String linea;
+			System.out.println("Archivo: nombres.txt");
 			while ((linea = br.readLine()) != null) {
 				System.out.println(linea);
 			}
