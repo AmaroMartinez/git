@@ -1,8 +1,6 @@
 package evaluacion3;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -18,9 +16,11 @@ public class RandomMasterMind {
 		Random rnd = new Random();
 
 		Scanner teclado = new Scanner(System.in);
-		String numerostring;
-		int nusuario;
-		char[] cadena = new char[4];		
+		String numero;
+
+		int cifrascorrecta = 0;
+		int posicionescorrectas = 0;
+		int posicioncorrecta;
 
 		// Generar 4 numeros aleatorios diferentes
 		while (numerocorrecto.size() < 4) {
@@ -31,38 +31,52 @@ public class RandomMasterMind {
 		}
 
 		// Mostrar el arraylist
-		System.out.println("Numero Generado " + numerocorrecto);
+		// System.out.println("Numero Generado " + numerocorrecto);
 		/*
 		 * for (int i = 0; i < numerocorrecto.size(); i++) {
 		 * System.out.println(numerocorrecto.get(i)); }
 		 */
-
-		// Pedir un numero de 4 cifras al usuario
+		System.out.println("Adivina el numero");
+		System.out.println("-----------------");
 		do {
-			System.out.println("Adivina el numero");
-			System.out.println("-----------------");
+			// Pedir un numero de 4 cifras al usuario
+
 			System.out.println("Introduce un numero de 4 cifras");
-			numerostring = teclado.nextLine();
-			try {
-				nusuario = Integer.parseInt(numerostring);
-			} catch (NumberFormatException e) {
-				try {
-				numerostring = numerostring.replaceAll("[^0-9]", "");
-				nusuario = Integer.parseInt(numerostring);
-				} catch (NumberFormatException e2) {
-					numerostring = "";
-					nusuario = 0;
+			numero = teclado.nextLine();
+			cifrascorrecta = 0;
+			posicionescorrectas = 0;
+			// Si el numero tiene 4 cifras
+			if (numero.length() == 4) {
+				// Por cada cifra indico si coincide la posicion
+				for (int posicion = 0; posicion < 4; posicion++) {
+					cifra = numero.charAt(posicion) - '0';
+					// Mostrar la cifra
+					// System.out.println("Cifra: " + cifra);
+					// Compruebo si hay alguna cfra en el numero correcto
+					posicioncorrecta = numerocorrecto.indexOf(cifra); // Devuelve la posicion o -1 si no lo encuentra
+					if (posicioncorrecta != -1) {
+						// Si la cifra esta en el numero correcto
+						cifrascorrecta = cifrascorrecta + 1;
+						// Compruebo si coincide la posicion
+						if (posicion == posicioncorrecta) {
+							// Si la cifra esta en la misma posicion
+							posicionescorrectas = posicionescorrectas + 1;
+						}
+					}
 				}
 			}
-		} while (numerostring.length() > 4 || numerostring.length() < 4);
-		
-		cadena = numerostring.toCharArray();
-		
-		//Mostrar numero introducido por el usuario
-		System.out.println("Numero Introducido: " + nusuario);
-		
-		//Comparar el numero generado con el numero del usuario
-		
+
+			// Muestro cuantas cifras y posiciones correctas hay
+			if (posicionescorrectas != 4) {
+				System.out.println("Cifras correctas: " + cifrascorrecta + " || Posiciones correctas: " + posicionescorrectas);
+				System.out.println();
+			}
+
+			// Cuando las posiciones correctas son 4 sale de la repetitiva
+		} while (posicionescorrectas != 4);
+
+		// Muestro mensaje cuandos e ha adivinado el numero
+		System.out.println("Enhorabuena has acertado el numero, era el: " + numero);
 
 		// Cerrar teclado
 		teclado.close();
