@@ -1,7 +1,7 @@
 package evaluacion3;
 
 import java.io.BufferedReader;
-//import java.io.BufferedWriter;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -15,7 +15,7 @@ import java.util.Scanner;
 *  Se deben controlar las posibles excepciones.
 *  */
 
-public class FicheroNombres {
+public class FicheroNombresWrite {
 
 	public static void main(String[] args) {
 
@@ -24,24 +24,24 @@ public class FicheroNombres {
 		
 		FileWriter fichero = null;
 		PrintWriter pw = null;
-		//BufferedWriter bw = null;
+		BufferedWriter bw = null;
 		try {
 			fichero = new FileWriter("nombres.txt");
 			pw = new PrintWriter(fichero);
-			//bw = new BufferedWriter(pw);
+			bw = new BufferedWriter(pw);
 			// Pido nombres hasta que introduzcan una cadena en blanco
 			do {
 				System.out.println("Introduce un nombre: ");
 				nombre = teclado.nextLine();
-				pw.println(nombre);
-				//bw.newLine();
+				bw.write(nombre);
+				bw.newLine();
 			} while (!nombre.isEmpty());
 			
 			// Cerrar teclado
 			teclado.close();
 			
 			// Cierro el fichero
-			//bw.close();
+			bw.close();
 			pw.close();
 			fichero.close();
 		} catch (IOException e) {
