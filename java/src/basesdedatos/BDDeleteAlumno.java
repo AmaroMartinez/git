@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class BDUpdateAlumno {
+public class BDDeleteAlumno {
 
 	public static void main(String[] args) {
 
@@ -18,8 +18,8 @@ public class BDUpdateAlumno {
 			// Creo un Statement
 			Statement st1 = conexion.createStatement();
 
-			// actualizo el valor del grupo del alumno '11111111A' a '1DW3'
-			st1.executeUpdate("UPDATE alumnos SET grupo='1DW3' WHERE dni='11111111A'");
+			// Borro el alumno con dni '12345678A'
+			st1.executeUpdate("Delete from alumnos WHERE dni='12345678A'");
 
 			// cierro el Statement despues de realizar la consulta
 			st1.close();
