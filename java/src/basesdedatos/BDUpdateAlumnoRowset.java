@@ -12,9 +12,9 @@ public class BDUpdateAlumnoRowset {
 
 	public static void main(String[] args) {
 
+		boolean modificado = false;
 		try {
-		// me conecto usando una conexion
-			Class.forName("com.mysql.jdbc.Driver");
+			// me conecto usando una conexion
 			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/bdalumnos", "root", "");
 			// desactivo la actualizacion automatica de datos
 			conexion.setAutoCommit(false);
@@ -28,12 +28,18 @@ public class BDUpdateAlumnoRowset {
 			crs.setCommand("SELECT * FROM alumnos");
 			crs.execute(conexion);
 			// cierro la conexion con la base de datos
-			conexion.close(); 
-			
-			
+			conexion.close();
+
+			String valor = "2DW3";
+			// actualizo en el crs el valor del grupo que está en la columna 4
+			// del registro que está en la primera posicion
+			crs.absolute(1);
+			crs.updateString(4, valor);
+			crs.updateRow();
+			// actualizo el valor de modificado
+			modificado = true;
+
 		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
