@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.Vector;
 
@@ -22,14 +23,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class VentanaJTableRowSet extends JFrame {
-
-	// contiene un panel de nombre contenedor en el que hay una etiqueta de nombre
-	// lblTexto con el valor "Datos de los Alumnos" en la parte superior, una JTable
-	// de nombre tabla con los datos de la tabla alumnos de la base de datos MySQL
-	// bdalumnos y una cabecera con los valores "DNI", "Nombre","Apellidos","Grupo",
-	// en el centro, y un botón de nombre btnSalir en la parte inferior. Al pulsar
-	// el botón Salir se saldrá de la aplicación. Para el proceso usa RowSet.
+public class VentanaJTableMetadataRowSet extends JFrame {
 
 	private static final long serialVersionUID = 7446438336543391859L;
 	private JPanel contenedor;
@@ -45,7 +39,7 @@ public class VentanaJTableRowSet extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaJTableRowSet frame = new VentanaJTableRowSet();
+					VentanaJTableMetadataRowSet frame = new VentanaJTableMetadataRowSet();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -57,7 +51,7 @@ public class VentanaJTableRowSet extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaJTableRowSet() {
+	public VentanaJTableMetadataRowSet() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contenedor = new JPanel();
@@ -70,30 +64,37 @@ public class VentanaJTableRowSet extends JFrame {
 		lblTexto.setHorizontalAlignment(SwingConstants.CENTER);
 		contenedor.add(lblTexto, BorderLayout.NORTH);
 
-		// Cabecera de la tabla
-		Vector<String> columnas = new Vector<String>();
-		columnas.add("DNI");
-		columnas.add("Nombre");
-		columnas.add("Apellidos");
-		columnas.add("Grupo");
-
 		try {
 			// Conexion a la base de datos
 			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/bdalumnos", "root", "");
-			
+
 			// desactivo la actualizacion automatica de datos
 			conexion.setAutoCommit(false);
-			
+
 			// creo el CachedRowSet
 			CachedRowSet crs;
 			RowSetFactory myRowSetFactory = null;
 			myRowSetFactory = RowSetProvider.newFactory();
 			crs = myRowSetFactory.createCachedRowSet();
-			
+
 			// selecciono todos los alumnos
 			crs.setCommand("SELECT * FROM alumnos");
 			crs.execute(conexion);
-			
+
+			// Cabecera de la tabla
+			ResultSetMetaData metaDatos = crs.getMetaData();
+
+			// Se obtiene el número de columnas.
+			int numeroColumnas = metaDatos.getColumnCount();
+
+			Vector<String> columnas = new Vector<String>();
+			// Se obtiene cada una de las etiquetas para cada columna
+			for (int i = 0; i < numeroColumnas; i++) {
+				// cojo el valor de la etiqueta de la columna
+				// los índices del rs empiezan en 1 pero los índices de las columnas empiezan en
+				// 0
+				columnas.add(metaDatos.getColumnLabel(i + 1));
+			}
 
 			// Coge los datos de la tabla por filas
 			Vector<Vector<String>> datosTabla = new Vector<Vector<String>>();

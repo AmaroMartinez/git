@@ -4,7 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Vector;
 
 import javax.swing.JFrame;
@@ -15,21 +18,11 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JTable;
-import javax.sql.rowset.CachedRowSet;
-import javax.sql.rowset.RowSetFactory;
-import javax.sql.rowset.RowSetProvider;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class VentanaJTableRowSet extends JFrame {
-
-	// contiene un panel de nombre contenedor en el que hay una etiqueta de nombre
-	// lblTexto con el valor "Datos de los Alumnos" en la parte superior, una JTable
-	// de nombre tabla con los datos de la tabla alumnos de la base de datos MySQL
-	// bdalumnos y una cabecera con los valores "DNI", "Nombre","Apellidos","Grupo",
-	// en el centro, y un botón de nombre btnSalir en la parte inferior. Al pulsar
-	// el botón Salir se saldrá de la aplicación. Para el proceso usa RowSet.
+public class VentanaJTableMetadata extends JFrame {
 
 	private static final long serialVersionUID = 7446438336543391859L;
 	private JPanel contenedor;
@@ -45,7 +38,7 @@ public class VentanaJTableRowSet extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaJTableRowSet frame = new VentanaJTableRowSet();
+					VentanaJTableMetadata frame = new VentanaJTableMetadata();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -57,7 +50,7 @@ public class VentanaJTableRowSet extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaJTableRowSet() {
+	public VentanaJTableMetadata() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contenedor = new JPanel();
@@ -70,47 +63,51 @@ public class VentanaJTableRowSet extends JFrame {
 		lblTexto.setHorizontalAlignment(SwingConstants.CENTER);
 		contenedor.add(lblTexto, BorderLayout.NORTH);
 
-		// Cabecera de la tabla
-		Vector<String> columnas = new Vector<String>();
-		columnas.add("DNI");
-		columnas.add("Nombre");
-		columnas.add("Apellidos");
-		columnas.add("Grupo");
-
 		try {
 			// Conexion a la base de datos
 			Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/bdalumnos", "root", "");
+
+			// Creo un statement
+			Statement st = conexion.createStatement();
+
+			// Escribo la consulta
+			String consulta = "SELECT * FROM alumnos";
+
+			// Realizo la consulta
+			ResultSet rs = st.executeQuery(consulta);
+
+			// Cabecera de la tabla
+			ResultSetMetaData metaDatos = rs.getMetaData();
 			
-			// desactivo la actualizacion automatica de datos
-			conexion.setAutoCommit(false);
-			
-			// creo el CachedRowSet
-			CachedRowSet crs;
-			RowSetFactory myRowSetFactory = null;
-			myRowSetFactory = RowSetProvider.newFactory();
-			crs = myRowSetFactory.createCachedRowSet();
-			
-			// selecciono todos los alumnos
-			crs.setCommand("SELECT * FROM alumnos");
-			crs.execute(conexion);
-			
+			// Se obtiene el número de columnas.
+			int numeroColumnas = metaDatos.getColumnCount();
+
+			Vector<String> columnas = new Vector<String>();
+			// Se obtiene cada una de las etiquetas para cada columna
+			for (int i = 0; i < numeroColumnas; i++) {
+				// cojo el valor de la etiqueta de la columna
+				// los índices del rs empiezan en 1 pero los índices de las columnas empiezan en
+				// 0
+				columnas.add(metaDatos.getColumnLabel(i + 1));
+			}
 
 			// Coge los datos de la tabla por filas
 			Vector<Vector<String>> datosTabla = new Vector<Vector<String>>();
-			while (crs.next()) {
+			while (rs.next()) {
 				// Crea un vector por fila y recoge los campos de la base de datos
 				Vector<String> fila = new Vector<String>();
-				fila.add(crs.getString("dni"));
-				fila.add(crs.getString("nombre"));
-				fila.add(crs.getString("apellidos"));
-				fila.add(crs.getString("grupo"));
+				fila.add(rs.getString("dni"));
+				fila.add(rs.getString("nombre"));
+				fila.add(rs.getString("apellidos"));
+				fila.add(rs.getString("grupo"));
 				fila.add("\n\n\n\n\n\n\n");
 				// Los añade al vector de vectores
 				datosTabla.add(fila);
 			}
 
 			// Cerrar la conexion
-			crs.close();
+			rs.close();
+			st.close();
 			conexion.close();
 
 			// TableModel
